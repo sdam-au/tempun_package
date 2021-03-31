@@ -1,5 +1,10 @@
 # tempun
 
+![](https://zenodo.org/badge/DOI/10.5281/zenodo.4650989.svg)
+
+### Citation
+Vojtěch Kaše. (2021, February 19). tempun (Version v0.1). Zenodo. http://doi.org/10.5281/zenodo.4650989
+
 ## Description
 
 `tempun` is a Python 3 package to deal with temporal uncertainty in historical & archaeological datasets. Dating of historical artifacts (e.g. inscriptions, books etc.) is typically expressed by means of a **dating interval** during which it is assumed that the artifact was produced. Commonly, the production itself was much shorter than the interval and did not take more than one year. Therefore, the interval rather expresses **uncertainty** concerning the actual date of production. The question is how to analyze temporal trends in data revealing such temporal uncertainty.
