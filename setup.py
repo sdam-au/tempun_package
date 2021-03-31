@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tempun", # Replace with your own username
-    version="0.1",
+    version="0.1.2",
     author="Vojtech Kase",
     author_email="vojtech.kase@gmail.com",
     description="A package to deal with temporal uncertainty in historical/archaeological datasets",
@@ -14,10 +14,10 @@ setuptools.setup(
     url="https://github.com/sdam-au/sddk",
     packages=setuptools.find_packages(),
     install_requires=[
-        "pandas>=1",
+        "pandas",
         "numpy",
-        "scipy>=1.5",
-        "matplotlib>=3.4"
+        "scipy",
+        "matplotlib"
         ],
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tempun
-Version: 0.1
+Version: 0.1.2
 Summary: A package to deal with temporal uncertainty in historical/archaeological datasets
 Home-page: https://github.com/sdam-au/sddk
 Author: Vojtech Kase
@@ -75,6 +75,7 @@ Description: # tempun
         
         ## Version history
         
+        * 0.1.1
         * 0.1 - first version
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
