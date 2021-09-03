@@ -71,5 +71,5 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 
 
 ## Version history
-
+* 0.1.4 - seed argument in model date
 * 0.1 - first version
