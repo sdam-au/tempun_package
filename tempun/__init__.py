@@ -3,12 +3,13 @@ from scipy.stats import trapz
 from scipy.stats import halfnorm
 import numpy as np
 
-def dist_range(start, stop, size=1, b=0): 
+def dist_range(start, stop, size=1, b=0, seed=None):
     """
     get random numbers of size = size on the basis of a start date and an end date
     by default: uniform distribution
     by specifying b parameter you get a trapezoidal distribution defined by the first turning point (lower bound)
     """
+    np.random.seed(seed=seed)
     r = trapz.rvs(b, 1-b, size=size)
     duration = abs((start)-stop)
     if duration == 0:
@@ -21,10 +22,11 @@ def dist_range(start, stop, size=1, b=0):
     else: # otherwise return a list of values
         return random_values
 
-def dist_ante_post(date, date_type, size=1, scale=50): # this function has been already implemented into modelling_distributions.py
+def dist_ante_post(date, date_type, size=1, scale=50, seed=None): # this function has been already implemented into modelling_distributions.py
     """
     get random numbers of size size ib on the basis of start date and end date and trapezoid distribution defined by first turn point (lower bound)
     """
+    np.random.seed(seed=seed)
     if "post" in date_type:
         r = halfnorm.rvs(date, scale, size)
         random_values = list(r.astype(int))
@@ -45,18 +47,18 @@ def dist_ante_post(date, date_type, size=1, scale=50): # this function has been 
         return random_values
 
 
-def model_date(start, stop, size=1, scale=25, b=0):
+def model_date(start, stop, size=1, scale=25, b=0, seed=None):
     """
     combine dist_range() and dist_ante_post()
     """
     try:
-        randoms = dist_range(int(start), int(stop), size=size, b=b)
+        randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
     except:
         try:
-            randoms =  dist_ante_post(int(start), "post", size=size, scale=scale)
+            randoms =  dist_ante_post(int(start), "post", size=size, scale=scale, seed=seed)
         except:
             try:
-                randoms =  dist_ante_post(int(stop), "ante", size=size, scale=scale)
+                randoms =  dist_ante_post(int(stop), "ante", size=size, scale=scale, seed=seed)
             except:
                 randoms = None
     return randoms
