@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from scipy.stats import trapz
 from scipy.stats import halfnorm
+import numbers
 import numpy as np
 
 def dist_range(start, stop, size=1, b=0, seed=None):
@@ -47,10 +48,14 @@ def dist_ante_post(date, date_type, size=1, scale=50, seed=None): # this functio
         return random_values
 
 
-def model_date(start, stop, size=1, scale=25, b=0, seed=None):
+def model_date(start, stop, size=1, scale=25, b=0, antepost=False, seed=None):
     """
     combine dist_range() and dist_ante_post()
     """
+    if antepost==False:
+        if (not isinstance(start, numbers.Number)) or (not isinstance(stop, numbers.Number)):
+            print("non-number identified")
+            start, stop = [el for el in [start, stop] if isinstance(el, numbers.Number)][0], [el for el in [start, stop] if isinstance(el, numbers.Number)][0]
     try:
         randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
     except:

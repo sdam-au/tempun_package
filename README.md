@@ -64,12 +64,15 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 >>> tempun.model_date(-340, -330, 10)
 [-334, -333, -332, -336, -332, -338, -333, -336, -333, -331]
 # example 3: model post quem (with default scale)
->>> tempun.model_date(114, "", 10)
+>>> tempun.model_date(114, "", 10, antepost=False)
+[114, 114, 114, 114, 114, 114, 114, 114, 114, 114]
+>>> tempun.model_date(114, "", 10, antepost=True)
 [123, 143, 123, 149, 123, 155, 125, 115, 128, 132]
 ```
 
 
 
 ## Version history
+* 0.1.5 - `antepost` argument added, default `False`
 * 0.1.4 - seed argument in model date
 * 0.1 - first version

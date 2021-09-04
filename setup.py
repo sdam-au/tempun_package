@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tempun", # Replace with your own username
-    version="0.1.4",
+    version="0.1.5",
     author="Vojtech Kase",
     author_email="vojtech.kase@gmail.com",
     description="A package to deal with temporal uncertainty in historical/archaeological datasets",
