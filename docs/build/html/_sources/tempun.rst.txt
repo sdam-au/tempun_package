@@ -1,0 +1,10 @@
+tempun package
+==============
+
+Module contents
+---------------
+
+.. automodule:: tempun
+   :members:
+   :undoc-members:
+   :show-inheritance:

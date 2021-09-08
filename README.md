@@ -73,6 +73,7 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 
 
 ## Version history
+* 0.1.6 - minor improvements
 * 0.1.5 - `antepost` argument added, default `False`
 * 0.1.4 - seed argument in model date
 * 0.1 - first version
