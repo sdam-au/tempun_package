@@ -3,7 +3,7 @@
 ![](https://zenodo.org/badge/DOI/10.5281/zenodo.4650989.svg)
 
 ### Citation
-Vojtěch Kaše. (2021, February 19). tempun (Version v0.1). Zenodo. http://doi.org/10.5281/zenodo.4650989
+Vojtěch Kaše. (2021). tempun (Version v0.1). Zenodo. http://doi.org/10.5281/zenodo.4650989
 
 ## Description
 
@@ -11,7 +11,7 @@ Vojtěch Kaše. (2021, February 19). tempun (Version v0.1). Zenodo. http://doi.o
 
 A way forward is to use the interval to extract **probability** of production of the artifact. All dates (years) outside of the dating interval have probality *p*=0; all dates within the interval have probability somehow proportional to the duration of the interval, while the sum of  probabilities for all years within the interval has to be equal to 1. This probality has to follow certain **distribution**. The package works with uniform or trapezoidal distribution. With uniform distribution, each year within the interval has an equal probality to be the year of production of the artifact. 
 
-We can use the intervals and the probalities associatiated with them to randomly assign individual dates (years) to each artifact within our dataset. In other words, we can **model** or **simulate** the date.  We can do this repeatedly, i.e. to each artifact assign a certain number of **random dates**.  This is in the core of a **Monte Carlo Simulation** (MCS) approach. In the package, it is is implemented by means of `model_date()` function. 
+We can use the intervals and the probalities associatiated with them to randomly assign individual dates (years) to each artifact within our dataset. In other words, we can **model** or **simulate** the date.  We can do this repeatedly, i.e. to each artifact assign a certain number of **random dates**.  This is in the core of a **Monte Carlo Simulation** (MCS) approach. In the package, it is implemented by means of `model_date()` function. 
 
 Having the random dates, we can proceed to do the analysis. For instance, we can recombine these dates into **multiple time series** and to compare between them. The package includes a bunch of functions developed for this purpose.
 
@@ -51,7 +51,7 @@ If `start` and `stop` are identical, the function returns the same number as wel
 There are three optional parameters:
 
 * `size=1`: how many random numbers you want to get; by default, size=1, i.e. only one number is returned
-* `b`: bending point *b* defining shape of the trapezoidal distribution; by default, *b*=0.1; set to 0 to get uniform distribution
+* `b`: bending point *b* defining shape of the trapezoidal distribution; by default, *b*=0, i.e. uniform distribution; set to 0.1 to get trapezoidal distribution
 * `scale`:  scale of the half-uniform distribution used to model ante quem and post quem; by default scale=25
 
 The function returns an individual number (if size=1; i.e. by default) or a list of numbers of length equal to size
@@ -70,9 +70,26 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 [123, 143, 123, 149, 123, 155, 125, 115, 128, 132]
 ```
 
+### get_simulation_variants()
 
+```python
+>>> get_simulation_variants(random_dates_lists)
+```
+
+### timeblocksplot_from_random()
+
+```python
+>>> timeblocksplot_from_randoms(random_dates_lists, timeblocks=None, ax=None, color="black", random_size=None, **kwargs)
+```
+
+### kdeplot_from_randoms()
+
+```python
+>>>kdeplot_from_randoms(random_dates_lists, ax=None, color="black", random_size=None, **kwargs)
+```
 
 ## Version history
+* 0.2 - numerous improvements and simplifications (some new features not compatible with previous versions...)
 * 0.1.6 - minor improvements
 * 0.1.5 - `antepost` argument added, default `False`
 * 0.1.4 - seed argument in model date

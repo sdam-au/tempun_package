@@ -85,7 +85,49 @@ def dist_ante_post(date, date_type, size=1, scale=25,
         return random_values
 
 
-def model_date(start, stop, size=1, scale=25, b=0, antepost=False, seed=None):
+def get_simulation_variants(random_dates_lists, random_size=None, column=None):
+    """
+    combine random dates associated with individual observations
+    into a list of simulations
+    each simulation consists of a list containing one version of dates
+    """
+
+    if isinstance(random_dates_lists, pd.core.frame.DataFrame):
+        random_dates_lists = random_dates_lists[column].tolist()
+    else:
+        # the first argument is actually not a dataframe, but a series of random dates lists...
+        random_dates_lists = list(random_dates_lists)
+    random_dates_lists = [el for el in random_dates_lists if el != None]
+    random_dates_lists = [el for el in random_dates_lists if el[0] != None]
+    if bool([el for el in random_dates_lists if isinstance(el[0], list)]): # if there is at least one list of list (i.e. count > 1 in some cases...)
+        random_dates_lists = [el if isinstance(el[0], list) else [el] for el in random_dates_lists]
+        random_dates_lists = [el for listlist in random_dates_lists for el in listlist] # make it more flat...
+    simulations_list = []
+    if random_size == None:
+        if isinstance(random_dates_lists[0], list):
+            random_size = len(random_dates_lists[0])
+        else:
+            random_size = len(random_dates_lists[1])
+    for n in range(random_size):
+        simulation = [random_dates[n] for random_dates in random_dates_lists if isinstance(random_dates, list)]
+        simulations_list.append(simulation)
+    return simulations_list
+
+def combine_dist_post_ante(start, stop, size, b, seed):
+    try:
+        randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
+    except:
+        try:
+            randoms = dist_ante_post(int(start), "post", size=size, scale=scale, seed=seed)
+        except:
+            try:
+                randoms = dist_ante_post(int(stop), "ante", size=size, scale=scale, seed=seed)
+            except:
+                randoms = None
+    return randoms
+
+
+def model_date(start, stop, size=1, count=1, scale=25, b=0, antepost=False, seed=None):
     """
     Combines dist_range() and dist_ante_post()
 
@@ -115,36 +157,15 @@ def model_date(start, stop, size=1, scale=25, b=0, antepost=False, seed=None):
             start = stop
         if (np.isnan(stop)) or not (isinstance(stop, numbers.Number)):
             stop = start
-    try:
-        randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
-    except:
-        try:
-            randoms = dist_ante_post(int(start), "post", size=size, scale=scale, seed=seed)
-        except:
-            try:
-                randoms = dist_ante_post(int(stop), "ante", size=size, scale=scale, seed=seed)
-            except:
-                randoms = None
+    if count == 1:
+        randoms = combine_dist_post_ante(start, stop, size, b, seed)
+    else:
+        randoms = []
+        for c in range(count):
+            one_list = combine_dist_post_ante(start, stop, size, b, seed)
+            randoms.append(one_list)
     return randoms
 
-
-def get_simulation_variants(dataframe, column, random_size=100):
-    """
-    combine random dates associated with individual observations
-    into a list of simulations
-    each simulation consists of a list containing one version of dates
-    """
-    random_dates_list = dataframe[column].tolist()
-    simulations_list = []
-    if random_size == None:
-        if isinstance(random_dates_list[0], list):
-            random_size = len(random_dates_list[0])
-        else:
-            random_size = len(random_dates_list[1])
-    for n in range(random_size):
-        simulation = [random_dates[n] for random_dates in random_dates_list if isinstance(random_dates, list)]
-        simulations_list.append(simulation)
-    return simulations_list
 
 
 def simulations_merged(simulation_data):
@@ -167,7 +188,6 @@ def get_timeblocks(start, stop, step):
             time_blocks.append((tup[0] + 1, tup[1]))
     return time_blocks
 
-
 def dates_per_block(list_of_dates, time_blocks):
     """
   count number of dates from a simulation within prespecified time blocks
@@ -180,17 +200,22 @@ def dates_per_block(list_of_dates, time_blocks):
     return dates_per_block
 
 
-def timeblocks_from_randoms(dataframe, column, time_blocks, random_size=100):
+def timeblocks_from_randoms(random_dates_lists, timeblocks=None, random_size=None):
     """
   combine get_simulation_variants() and dates_per_block() into one functions
   """
-    simulations_list = get_simulation_variants(dataframe, column, random_size)
+    simulations_list = get_simulation_variants(random_dates_lists, random_size)
+    if timeblocks == None:
+        # derive the timeblocks automatically:
+        timeblockstep = 50
+        mindate = math.floor(np.min(simulations_list[0]) / 50) * 50
+        maxdate = math.ceil(np.max(simulations_list[0]) / 50) * 50
+        timeblocks = [mindate, maxdate, timeblockstep]
     sim_tup_lists = []
-    if isinstance(time_blocks[0],
-                  int):  # if first entry of timeblocks is not an integer (what indicates, that the input is a list of predefined timevlocks:
-        time_blocks = get_timeblocks(time_blocks[0], time_blocks[1], time_blocks[2])
+    if isinstance(timeblocks[0], int):  # if first entry of timeblocks is not an integer (what indicates, that the input is a list of predefined timevlocks:
+        timeblocks = get_timeblocks(timeblocks[0], timeblocks[1], timeblocks[2])
     for sim_list in simulations_list:
-        sim_tup_list = dates_per_block(sim_list, time_blocks)
+        sim_tup_list = dates_per_block(sim_list, timeblocks)
         sim_tup_lists.append(sim_tup_list)
     return sim_tup_lists
 
@@ -249,6 +274,19 @@ def plot_timeblocks_data_lines(list_of_timeblocks_data, ax=None, color=None):
         layers.append(layer)
     return layers
 
+def timeblocksplot_from_randoms(random_dates_lists, timeblocks=None, ax=None, color="black", random_size=None, **kwargs):
+    timeblocks_data = timeblocks_from_randoms(random_dates_lists, timeblocks, random_size=random_size)
+    timeblockplot = plot_timeblocks_data(timeblocks_data, ax=ax, color=color)
+    return timeblockplot
+
+def kdeplot_from_randoms(random_dates_lists, ax=None, color="black", random_size=None, **kwargs):
+    timeseries_simulations = get_simulation_variants(random_dates_lists, random_size=random_size)
+    if ax == None:
+        fig, ax = plt.subplots()
+    layers = []
+    for data in timeseries_simulations[:random_size]:
+        layers.append(sns.kdeplot(data, ax=ax, color=color))
+    return layers
 
 ### AORISTIC ANALYSIS
 
