@@ -1,9 +1,9 @@
 # tempun
 
-![](https://zenodo.org/badge/DOI/10.5281/zenodo.4650989.svg)
+![http://doi.org/10.5281/zenodo.4650989](https://zenodo.org/badge/DOI/10.5281/zenodo.4650989.svg)
 
 ### Citation
-Vojtěch Kaše. (2021). tempun (Version v0.1). Zenodo. http://doi.org/10.5281/zenodo.4650989
+Vojtěch Kaše. (2022). tempun (Version v0.2). Zenodo. http://doi.org/10.5281/zenodo.4650989
 
 ## Description
 
@@ -86,6 +86,12 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 
 ```python
 >>>kdeplot_from_randoms(random_dates_lists, ax=None, color="black", random_size=None, **kwargs)
+```
+
+### timeblocksplot_from_randoms()
+
+```python
+>>>timeblocksplot_from_randoms(random_dates_lists, timeblocks=None, ax=None, color="black", random_size=None, **kwargs)
 ```
 
 ## Version history
