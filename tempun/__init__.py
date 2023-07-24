@@ -9,6 +9,8 @@ from scipy.stats import halfnorm
 import numbers
 import math
 import numpy as np
+import seaborn as sns
+import pandas as pd
 
 
 def dist_range(start, stop, size=1, b=0, seed=None):
@@ -113,7 +115,7 @@ def get_simulation_variants(random_dates_lists, random_size=None, column=None):
         simulations_list.append(simulation)
     return simulations_list
 
-def combine_dist_post_ante(start, stop, size, b, seed):
+def combine_dist_post_ante(start, stop, size, b, seed, scale=25):
     try:
         randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
     except:
@@ -127,7 +129,7 @@ def combine_dist_post_ante(start, stop, size, b, seed):
     return randoms
 
 
-def model_date(start, stop, size=1, count=1, scale=25, b=0, antepost=False, seed=None):
+def model_date(start, stop, size=1, count=1, b=0, seed=None, antepost=False, scale=25,):
     """
     Combines dist_range() and dist_ante_post()
 

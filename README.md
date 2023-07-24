@@ -95,6 +95,8 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 ```
 
 ## Version history
+* 0.2.2 - minor bugs fixing
+* 0.2.1 - minor bugs fixing
 * 0.2 - numerous improvements and simplifications (some new features not compatible with previous versions...)
 * 0.1.6 - minor improvements
 * 0.1.5 - `antepost` argument added, default `False`
