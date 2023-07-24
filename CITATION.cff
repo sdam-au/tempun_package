@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: tempun
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Vojtěch
+    family-names: Kaše
+    email: kase@kfi.zcu.cz
+    affiliation: University of West Bohemia
+    orcid: 'https://orcid.org/0000-0002-6601-1605'
+repository-code: 'https://github.com/sdam_au/tempun_package'
+keywords:
+  - modelling temporal uncertainty
+  - historical data analysis
+  - archaelogical data analysis
+  - Monte Carlo simulations
+  - computational history
+license: CC-BY-NC-4.0
+version: '0.2.2'
+date-released: '2022-06-28'
