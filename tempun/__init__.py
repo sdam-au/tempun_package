@@ -4,8 +4,7 @@ This is the main module of the tempun package.
 
 
 import matplotlib.pyplot as plt
-from scipy.stats import trapz
-from scipy.stats import halfnorm
+from numpy import trapz
 import numbers
 import math
 import numpy as np
