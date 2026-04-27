@@ -95,7 +95,7 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 ```
 
 ## Version history
-from numpy import trapz
+* 0.2.5 - fixed problems in `model_date` returning NoneType under some conditions
 * 0.2.4 - import `from scipy.stats import trapz` replaced by `from numpy import trapz`
 * 0.2.3 - import `from scipy.stats import trapz` replaced by `from scipy.integrate import trapz`
 * 0.2.2 - minor bugs fixing

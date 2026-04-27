@@ -4,7 +4,7 @@ This is the main module of the tempun package.
 
 
 import matplotlib.pyplot as plt
-from numpy import trapz
+from scipy.stats import trapz, halfnorm
 import numbers
 import math
 import numpy as np
@@ -36,7 +36,6 @@ def dist_range(start, stop, size=1, b=0, seed=None):
     duration = abs((start) - stop)
     if duration == 0:
         random_values = [start] * size
-        return random_values
     else:
         random_values = list(((r * duration) + start).round().astype(int))
     if size == 1:  # if only one number, return it as a number
@@ -96,7 +95,7 @@ def get_simulation_variants(random_dates_lists, random_size=None, column=None):
     if isinstance(random_dates_lists, pd.core.frame.DataFrame):
         random_dates_lists = random_dates_lists[column].tolist()
     else:
-        # the first argument is actually not a dataframe, but a series of random dates lists...
+        # the first argument is actually not a dataframe, but a series of random dates lists...
         random_dates_lists = list(random_dates_lists)
     random_dates_lists = [el for el in random_dates_lists if el != None]
     random_dates_lists = [el for el in random_dates_lists if el[0] != None]
@@ -114,16 +113,24 @@ def get_simulation_variants(random_dates_lists, random_size=None, column=None):
         simulations_list.append(simulation)
     return simulations_list
 
+
+def _is_number(value):
+    """
+    Return True if value is a real numeric value and not NaN.
+    """
+    return isinstance(value, numbers.Number) and not pd.isna(value)
+
+
 def combine_dist_post_ante(start, stop, size, b, seed, scale=25):
     try:
         randoms = dist_range(int(start), int(stop), size=size, b=b, seed=seed)
-    except:
+    except (TypeError, ValueError, OverflowError):
         try:
             randoms = dist_ante_post(int(start), "post", size=size, scale=scale, seed=seed)
-        except:
+        except (TypeError, ValueError, OverflowError):
             try:
                 randoms = dist_ante_post(int(stop), "ante", size=size, scale=scale, seed=seed)
-            except:
+            except (TypeError, ValueError, OverflowError):
                 randoms = None
     return randoms
 
@@ -151,19 +158,24 @@ def model_date(start, stop, size=1, count=1, b=0, seed=None, antepost=False, sca
     :rtype: list
     """
     if antepost == False:
-        if (not isinstance(start, numbers.Number)) or (not isinstance(stop, numbers.Number)):
-            start, stop = [el for el in [start, stop] if isinstance(el, numbers.Number)][0], \
-                          [el for el in [start, stop] if isinstance(el, numbers.Number)][0]
-        if (np.isnan(start)) or not (isinstance(start, numbers.Number)):
-            start = stop
-        if (np.isnan(stop)) or not (isinstance(stop, numbers.Number)):
+        start_is_number = _is_number(start)
+        stop_is_number = _is_number(stop)
+
+        if start_is_number and stop_is_number:
+            pass
+        elif start_is_number:
             stop = start
+        elif stop_is_number:
+            start = stop
+        else:
+            return None
+
     if count == 1:
-        randoms = combine_dist_post_ante(start, stop, size, b, seed)
+        randoms = combine_dist_post_ante(start, stop, size, b, seed, scale=scale)
     else:
         randoms = []
         for c in range(count):
-            one_list = combine_dist_post_ante(start, stop, size, b, seed)
+            one_list = combine_dist_post_ante(start, stop, size, b, seed, scale=scale)
             randoms.append(one_list)
     return randoms
 
@@ -174,7 +186,7 @@ def simulations_merged(simulation_data):
     recombine the simulation variants
     """
     merged_data = []
-    for n in range(len(simulation_data[0])):  #  choose the first simulation to get the length
+    for n in range(len(simulation_data[0])):  # choose the first simulation to get the length
         merged_data.append((simulation_data[0][n][0], [sim[n][1] for sim in simulation_data]))
     return merged_data
 
@@ -188,6 +200,7 @@ def get_timeblocks(start, stop, step):
         else:
             time_blocks.append((tup[0] + 1, tup[1]))
     return time_blocks
+
 
 def dates_per_block(list_of_dates, time_blocks):
     """
@@ -242,7 +255,7 @@ def get_min_max_conf(sim_data, conf_int):
 
 def plot_timeblocks_data(sim_data, ax=None, color="black", **kwargs):
     """
-    plot timeblocks data with confidence intervals 
+    plot timeblocks data with confidence intervals
     """
     if ax == None:
         fig, ax = plt.subplots()
@@ -256,7 +269,7 @@ def plot_timeblocks_data(sim_data, ax=None, color="black", **kwargs):
 
 def plot_timeblocks_data_lines(list_of_timeblocks_data, ax=None, color=None):
     """
-  plot timeblocks data as a series of overlapping line plots 
+  plot timeblocks data as a series of overlapping line plots
   """
     layers = []
     for timeblocks in list_of_timeblocks_data:
@@ -275,10 +288,12 @@ def plot_timeblocks_data_lines(list_of_timeblocks_data, ax=None, color=None):
         layers.append(layer)
     return layers
 
+
 def timeblocksplot_from_randoms(random_dates_lists, timeblocks=None, ax=None, color="black", random_size=None, **kwargs):
     timeblocks_data = timeblocks_from_randoms(random_dates_lists, timeblocks, random_size=random_size)
     timeblockplot = plot_timeblocks_data(timeblocks_data, ax=ax, color=color)
     return timeblockplot
+
 
 def kdeplot_from_randoms(random_dates_lists, ax=None, color="black", random_size=None, **kwargs):
     timeseries_simulations = get_simulation_variants(random_dates_lists, random_size=random_size)
@@ -288,6 +303,7 @@ def kdeplot_from_randoms(random_dates_lists, ax=None, color="black", random_size
     for data in timeseries_simulations[:random_size]:
         layers.append(sns.kdeplot(data, ax=ax, color=color))
     return layers
+
 
 ### AORISTIC ANALYSIS
 
@@ -336,7 +352,7 @@ def sim_data_by_function(df, n_sims, time_blocks, function, *args, random_dates_
         timeblocks : list or tuple specifying startdate, enddate and steps of the timeblocks (e.g. "[-200, 600, 100]")
         function : any function taking a dataframe as its first and main input, using it for some computation (e.g. total number of words in certain column), and returning a numerical output
         *args : additional arguments to be used by the function
-        random_dates_column : column containing the preassigned random dates 
+        random_dates_column : column containing the preassigned random dates
     returns:
         list of simulation data of `n_sims` length
     """

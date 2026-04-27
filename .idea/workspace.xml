@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="ff431e9e-8f0f-42e2-98fc-9600b6f6892a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/tempun_package.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tempun_package.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tempun-0.1.6-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tempun-0.1.6.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/tempun/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/tempun/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tempun-0.2.2-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tempun-0.2.2.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tempun-0.2.3-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tempun-0.2.3.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tempun.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/tempun.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempun.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tempun.egg-info/SOURCES.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tempun/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tempun/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/home/jupyter-vojta/notebooks/tempun_package" value="38fEuBHn1fEZSCHxs0v6Ei3VzwJ" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
   </component>
   <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
     <envs>
@@ -30,9 +49,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="38fEuBHn1fEZSCHxs0v6Ei3VzwJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,10 +65,15 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "last_opened_file_path": "/home/jupyter-vojta/notebooks/tempun_package",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -98,8 +122,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.30387.25" />
-        <option value="bundled-python-sdk-89161513a3c2-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.25" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-PY-261.23567.80" />
+        <option value="bundled-python-sdk-30dfb64a4d04-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.23567.80" />
       </set>
     </attachedChunks>
   </component>
@@ -111,6 +135,7 @@
       <option name="presentableId" value="Default" />
       <updated>1769182444684</updated>
       <workItem from="1769182445880" duration="2420000" />
+      <workItem from="1777277436618" duration="2451000" />
     </task>
     <servers />
   </component>
