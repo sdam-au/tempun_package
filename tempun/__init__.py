@@ -3,14 +3,15 @@ This is the main module of the tempun package.
 """
 
 
+
 import matplotlib.pyplot as plt
-from scipy.stats import trapz, halfnorm
+from scipy.stats import trapezoid as trapz
+from scipy.stats import halfnorm
 import numbers
 import math
 import numpy as np
 import seaborn as sns
 import pandas as pd
-
 
 def dist_range(start, stop, size=1, b=0, seed=None):
     """

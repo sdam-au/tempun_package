@@ -95,6 +95,7 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 ```
 
 ## Version history
+* 0.2.6 - solving dependencies
 * 0.2.5 - fixed problems in `model_date` returning NoneType under some conditions
 * 0.2.4 - import `from scipy.stats import trapz` replaced by `from numpy import trapz`
 * 0.2.3 - import `from scipy.stats import trapz` replaced by `from scipy.integrate import trapz`
@@ -105,3 +106,10 @@ The function returns an individual number (if size=1; i.e. by default) or a list
 * 0.1.5 - `antepost` argument added, default `False`
 * 0.1.4 - seed argument in model date
 * 0.1 - first version
+
+## Repository housekeeping
+
+IDE artifacts (`.idea/`, `*.iml`) and Jupyter checkpoints (`.ipynb_checkpoints/`)
+are not tracked. Bulk data and model directories (`large_files/`, `large_data/`)
+are never committed; keep large inputs and outputs there. See the
+[organizer](https://github.com/kasev/organizer) workspace for the shared workflow.
